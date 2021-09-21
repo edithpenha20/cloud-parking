@@ -22,8 +22,9 @@ class ParkingControllerTest {
     }
 
     @Test
-    void findAll() {
+    void windAllThenCheckResult() {
         RestAssured.given()
+                .auth().basic("parking", "p@rking123")
                 .when()
                 .get("/parking")
                 .then()
@@ -41,6 +42,7 @@ class ParkingControllerTest {
 
         RestAssured.given()
                 .when()
+                .auth().basic("parking", "p@rking123")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(createDTO)
                 .post("/parking")

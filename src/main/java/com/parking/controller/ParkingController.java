@@ -59,11 +59,9 @@ public class ParkingController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PostMapping("/{id}")
-//    public ResponseEntity<ParkingDTO> exitparking(@RequestBody ParkingCreateDTO createDTO){
-//        var parkingCreate = parkingMapper.toParkingCreate(createDTO);
-//        var parking = parkingService.exitparking(parkingCreate);
-//        var result = parkingMapper.toParkingDTO(parking);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(result);
-//    }
+    @PostMapping("/{id}")
+    public ResponseEntity<ParkingDTO> checkout(@PathVariable String id) {
+        Parking parking = parkingService.checkout(id);
+        return ResponseEntity.ok(parkingMapper.toParkingDTO(parking));
+    }
 }

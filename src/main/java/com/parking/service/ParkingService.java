@@ -3,15 +3,13 @@ package com.parking.service;
 import com.parking.exception.ParkingNotFoundException;
 import com.parking.model.Parking;
 import com.parking.repository.ParkingRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ParkingService {
@@ -22,6 +20,7 @@ public class ParkingService {
         this.parkingRepository = parkingRepository;
     }
 
+    @Transactional(readOnly = true)
     public List<Parking> findAll() {
         return parkingRepository.findAll();
     }
@@ -30,11 +29,13 @@ public class ParkingService {
         return UUID.randomUUID().toString().replace("-","");
     }
 
+    @Transactional(readOnly = true)
     public Parking findById(String id) {
         return parkingRepository.findById(id).orElseThrow(() ->
                 new ParkingNotFoundException(id));
     }
 
+    @Transactional
     public Parking createParking(Parking parkingCreate) {
         String uuid = getUUID();
         parkingCreate.setId(uuid);
@@ -43,12 +44,14 @@ public class ParkingService {
         return parkingCreate;
     }
 
+    @Transactional
     public void deleteParking(String id) {
         findById(id);
         parkingRepository.deleteById(id);
     }
 
 
+    @Transactional
     public Parking updateParking(String id, Parking parkingCreate) {
         Parking parkingUpdate = findById(id);
         parkingUpdate.setColor(parkingCreate.getColor());
@@ -59,6 +62,13 @@ public class ParkingService {
         return parkingUpdate;
     }
 
-//    public void exitparking(Parking parkingCreate) {
-//    }
+    @Transactional
+    public Parking checkout(String id) {
+        Parking parking = findById(id);
+        parking.setExitDate(LocalDateTime.now());
+        parking.setBill(ParkingCheckout.getBill(parking));
+        parkingRepository.save(parking);
+
+        return parking;
+    }
 }
