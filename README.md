@@ -1,12 +1,11 @@
+### Cloud Parking
 
-#Cloud Parking
+API Parking Cloud consiste em uma aplicação de um estacionamento que recebe dados da entrada de um veículo em um estacionamento e calcula o tempo em que carro esteve no estabelecimento.
 
-###API Parking Cloud consiste em uma aplicação de um estacionamento que recebe dados da entrada de um veículo em um estacionamento e calcula o tempo em que carro esteve no estabelecimento.
-
-
-
-##Tecnologias usadas:
-
+## Tecnologias usadas:
+- Java 11;
+- Maven;
+- Spring Data JPA;
 - Spring Web;
 - Spring Boot;
 - Spring Security;
@@ -14,12 +13,10 @@
 - Heroku;
 - Swagger (Documentaçao).
 
+## Links:
 
-O link para acessar a API na nuvem é: https://parking-cloud.herokuapp.com/swagger-ui.html
-
-
-
-##Login para acessar a aplicação:
-
-```Login: parking
-Password: p@rking123```
+- Link do Heroku: https://parking-cloud.herokuapp.com/swagger-ui.html
+```
+Login: parking
+Password: p@rking123
+```
